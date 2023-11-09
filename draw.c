@@ -29,7 +29,7 @@ int rendring_minimap(t_cub *cub)
     mlx_clear_window(cub->mlx, cub->window);
     draw_map(cub);
     draw_player_position(cub,cub->player.x,cub->player.y);
-    rays(cub);
+  rays(cub);
     mlx_put_image_to_window(cub->mlx, cub->window, cub->img, 0, 0);
     return(0);
 }

@@ -7,26 +7,30 @@ void rays(t_cub *pos)
     double num_ray;
     double i;
     double orientation;
-    int or;
+   double or;
 
     i = 0;
     num_ray=0;
    
-    while(num_ray<7)
+//      while(num_ray<7)
+//    {   
+        x = pos->player.x;
+        y = pos->player.y;
+        //ssssprintf("ori == %d\n" , pos->orientation);
+        //or=(PI / 2) / 7;
+    while(1)
     {
-    x = pos->player.x;
-    y = pos->player.y;
-     or=(M_PI / 2) / 7;
-    while(i < 40)
-    {
-        orientation = pos->orientation+num_ray*or;
-        my_mlx_pixel_put(pos, x, y, 0x00FF00AA);
+       // printf("(%f,%f)\n",x,y);
+        orientation = pos->orientation;
+        my_mlx_pixel_put(pos, x, y, 0x1DF235);
         x += cos(orientation);
-        y += sin(orientation );
-        i++;
+        y += sin(orientation);
+        printf("-------> x,%d\n",(int)y / SIZE );
+         if(pos->map[(int)(y / SIZE)][(int)(x / SIZE)] == '1')
+             break;
     }
-    num_ray++;
-    }
+    //  num_ray++;
+    //  }
 }
 
 void init_data(t_data *data)
@@ -72,50 +76,58 @@ void init_cub(t_cub *cub)
     cub->orientation = 0;
 }
 
-void calculateNewPosition(float *x, float *y, float ort, float dist) {
+void calculateNewPosition(t_cub *cub, float ort, float dist)
+{
+    float x_new;
+    float y_new;
 
-    *x += dist * cos(ort);
-    *y += dist * sin(ort);
+    x_new = cub->player.x + dist * cos(ort);
+    y_new = cub->player.y + dist * sin(ort);
+
+    if(cub->map[(int)(y_new/SIZE)][(int)(x_new/SIZE)] == '0')
+    {
+        cub->player.x = x_new;
+        cub->player.y = y_new;
+    }
 }
 
 int move(int keycode,t_cub *cub)
 {
     // printf("=========\n");
-    printf("-------keycode = %d------\n",keycode);
-    if(keycode == 53)
+    printf("---%c---keycode = %d--- x=%f--y=%f-\n",cub->map[(int)(cub->player.y)/SIZE][(int)(cub->player.x)/SIZE],keycode,cub->player.x ,cub->player.y );
+    if(keycode == 65307)
         exit(0);
-    if(keycode == 123)
+    if(keycode == 65361)
     {
         cub->orientation -= (PI / 180) * 2;
         // printf("orientation = %f\n",cub->orientation);
     // calculateNewPosition(&cub->player.x,&cub->player.y,cub->orientation,1);
     }
-    if(keycode == 124)
+    if(keycode == 65363)
     {
         cub->orientation += (PI / 180) * 2;
         // printf("orientation = %f\n",cub->orientation);
-
     //    calculateNewPosition(&cub->player.x,&cub->player.y,cub->orientation,1);
     }
-    if(keycode == 13)
+    if(keycode == 119)
     {
-        calculateNewPosition(&cub->player.x,&cub->player.y,cub->orientation,4);
+        calculateNewPosition(cub,cub->orientation,4);
     }
-    if(keycode == 1)
+    if(keycode == 115)
     {
-        calculateNewPosition(&cub->player.x,&cub->player.y,cub->orientation,-4);
+        calculateNewPosition(cub,cub->orientation,-4);
     }
-    if(keycode == 0)
+    if(keycode == 97 )
     {
-        calculateNewPosition(&cub->player.x,&cub->player.y,cub->orientation + M_PI_2,-4);
+        calculateNewPosition(cub,cub->orientation + (PI*0,5),-4);
     }
-    if(keycode == 2 && cub->player.x < 360)
+    if(keycode == 100 )
     {
-        calculateNewPosition(&cub->player.x,&cub->player.y,cub->orientation + M_PI_2,4);
+        calculateNewPosition(cub,cub->orientation -(PI*0,5),4);
     }
-
     return(0);
 }
+
 void fill_orientation(char c,t_cub *cub)
 {
     if(c=='N')
@@ -127,6 +139,7 @@ void fill_orientation(char c,t_cub *cub)
     if(c=='E')
         cub->orientation = PI;
 }
+
 void init_player(t_cub *cub)
 {
     int i = 0;
@@ -142,6 +155,7 @@ void init_player(t_cub *cub)
                 cub->player.x = (j * SIZE) + (SIZE / 2);
                 // printf("x = %f\n",cub->player.x);
                 cub->player.y = (i * SIZE)  + (SIZE / 2);
+                cub->map[(int)(cub->player.y)/SIZE][(int)(cub->player.x)/SIZE] = '0';
                 // printf("y = %f\n",cub->player.y);
                 fill_orientation(cub->map[i][j],cub);
                 return;

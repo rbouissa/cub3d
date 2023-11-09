@@ -22,7 +22,7 @@ all: $(NAME)
 	$(CC) -Imlx -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(OBJ) -lm -lmlx -lXext -lX11 -o $(NAME)
 
 clean:
 		$(RM) $(OBJ)

@@ -42,6 +42,7 @@ void	empty_line(char v)
 		exit(1);
 	}
 }
+
 int check_empty_space(char *v)
 {
 	int i=0;
@@ -53,6 +54,7 @@ int check_empty_space(char *v)
 	
 	return(0);
 }
+
 int skip_space(char *v)
 {
 	int i=0;
@@ -61,6 +63,7 @@ int skip_space(char *v)
 		i++;
 	return(i);
 }
+
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
@@ -145,6 +148,7 @@ void check_around_zero(char **map,int i,int j,int k)
 	}
 	
 }
+
 void map_checking(char **map)
 {
 	int i = 0;

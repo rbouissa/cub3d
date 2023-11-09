@@ -18,6 +18,23 @@
 #define PI 3.14
 #define ANGLE 30
 
+// #  define ESC_KEY 53
+// #  define D_KEY 2
+// #  define A_KEY 0
+// #  define W_KEY 13
+// #  define S_KEY 1
+// #  define P_KEY 35
+// #  define C_KEY 8
+// #  define SLASH_KEY 47
+// #  define RIGHT_KEY 124
+// #  define LEFT_KEY 123
+// #  define UP_KEY 126
+// #  define DOWN_KEY 125
+// #  define FORWARD_SCROLL 5
+// #  define BACKWARDS_SCROLL 4
+// #  define LEFT_CLIC 1
+// #  define RIGHT_CLIC 2
+
 
 typedef struct s_player{
     float x;
