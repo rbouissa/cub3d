@@ -129,5 +129,5 @@ void draw_empty(t_cub *cub,int x,int y);
 void draw_player_position(t_cub *cub,int x,int y);
 void draw_map(t_cub *cub);
 void my_mlx_pixel_put(t_cub *data, int x, int y, int color);
-void rays(t_cub *pos);
+double rays(t_cub *pos);
 #endif

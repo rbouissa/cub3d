@@ -10,7 +10,7 @@ void arg_check(char *v,int c)
         printf("INVALID NUMBER OF ARGUMENT!\n");
         exit(1);
     }
-    i = ft_strlen(v) -4;
+    i = ft_strlen(v) - 4;
     while(s[j] && v[i])
     {
         if(s[j]!=v[i])
@@ -34,6 +34,7 @@ void empty_file(char *v)
 	}
 	(printf("Error\nOops!Empty File!\n"),exit(1));
 }
+
 void	empty_line(char v)
 {
 	if (v == '\n')

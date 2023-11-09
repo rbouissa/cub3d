@@ -1,36 +1,38 @@
 #include"cub3d.h"
 
-void rays(t_cub *pos)
+double rays(t_cub *pos)
 {
     double x;
     double y;
     double num_ray;
-    double i;
+    double counter;
     double orientation;
-   double or;
+    double or;
 
-    i = 0;
-    num_ray=0;
    
-//      while(num_ray<7)
-//    {   
+    num_ray=0;
+    orientation = pos->orientation - (PI/6);
+      while(orientation < pos-> orientation+(PI/6))
+    {     
         x = pos->player.x;
         y = pos->player.y;
         //ssssprintf("ori == %d\n" , pos->orientation);
         //or=(PI / 2) / 7;
     while(1)
     {
-       // printf("(%f,%f)\n",x,y);
-        orientation = pos->orientation;
+       
+        //orientation = pos->orientation;
         my_mlx_pixel_put(pos, x, y, 0x1DF235);
         x += cos(orientation);
         y += sin(orientation);
-        printf("-------> x,%d\n",(int)y / SIZE );
+        //printf("-------> x,%d\n",(int)y / SIZE );
          if(pos->map[(int)(y / SIZE)][(int)(x / SIZE)] == '1')
              break;
+             counter++;
     }
-    //  num_ray++;
-    //  }
+    orientation=orientation + 0.008;
+      }
+      return counter;
 }
 
 void init_data(t_data *data)
@@ -94,7 +96,7 @@ void calculateNewPosition(t_cub *cub, float ort, float dist)
 int move(int keycode,t_cub *cub)
 {
     // printf("=========\n");
-    printf("---%c---keycode = %d--- x=%f--y=%f-\n",cub->map[(int)(cub->player.y)/SIZE][(int)(cub->player.x)/SIZE],keycode,cub->player.x ,cub->player.y );
+    //printf("---%c---keycode = %d--- x=%f--y=%f-\n",cub->map[(int)(cub->player.y)/SIZE][(int)(cub->player.x)/SIZE],keycode,cub->player.x ,cub->player.y );
     if(keycode == 65307)
         exit(0);
     if(keycode == 65361)
@@ -177,7 +179,7 @@ int main(int c,char **v)
     init_pl(&player);
     cub.player = player;
     arg_check(v[1],c);
-    cub.map=read_map(v[1],&cub);
+    cub.map = read_map(v[1],&cub);
    // check_textures_path(&cub);
     map_checking(cub.map);
     // int i = 0;
