@@ -71,6 +71,8 @@ typedef struct s_cub
     int pos_y;
     int f_rgb;
     int c_rgb;
+    int x_wall;
+    int y_wall;
     t_player player;
   char        *addr;
   int         bits_per_pixel;
@@ -78,6 +80,13 @@ typedef struct s_cub
   int         endian;
   t_data data;
   float orientation;
+
+
+
+
+  double hight_Wall;
+  int bottom;
+  int top;
 }   t_cub;
 
 
@@ -129,5 +138,6 @@ void draw_empty(t_cub *cub,int x,int y);
 void draw_player_position(t_cub *cub,int x,int y);
 void draw_map(t_cub *cub);
 void my_mlx_pixel_put(t_cub *data, int x, int y, int color);
-double rays(t_cub *pos);
+void rays(t_cub *pos);
+double calcul_distance(t_cub *cub);
 #endif

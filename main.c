@@ -1,17 +1,50 @@
 #include"cub3d.h"
 
-double rays(t_cub *pos)
+void make_wall(t_cub *cub)
+{
+    double distance_Wall;
+    double dis;
+    distance_Wall= calcul_distance(cub);
+    cub->hight_Wall=(64*WIDTH)/distance_Wall;
+    cub->top=(HEIGHT/2)-(cub->hight_Wall/2);
+    cub->bottom=cub->top+cub->hight_Wall;
+}
+
+void dr_wall(t_cub *cub, int counter)
+{
+    int color;
+    int y;
+
+    y=0;
+    while(y<HEIGHT)
+    {
+        if(y<cub->top)
+            color=0xffffff;
+        else if(y>cub->bottom)
+        {
+            color=0x00ff00;
+        }
+        else
+            color=0xff0000;
+        my_mlx_pixel_put(cub,counter,y,color);
+            y++;
+    }
+}
+void rays(t_cub *pos)
 {
     double x;
     double y;
     double num_ray;
-    double counter;
+    int counter;
     double orientation;
     double or;
+    double increment;
 
    
     num_ray=0;
+    counter = 0;
     orientation = pos->orientation - (PI/6);
+    increment = (PI/3) / WIDTH;
       while(orientation < pos-> orientation+(PI/6))
     {     
         x = pos->player.x;
@@ -22,18 +55,30 @@ double rays(t_cub *pos)
     {
        
         //orientation = pos->orientation;
-        my_mlx_pixel_put(pos, x, y, 0x1DF235);
+        //my_mlx_pixel_put(pos, x, y, 0x1DF235);
         x += cos(orientation);
         y += sin(orientation);
         //printf("-------> x,%d\n",(int)y / SIZE );
          if(pos->map[(int)(y / SIZE)][(int)(x / SIZE)] == '1')
              break;
-             counter++;
+            
     }
-    orientation=orientation + 0.008;
+      pos->x_wall=x;
+      pos->y_wall=y; 
+      make_wall(pos);
+      dr_wall(pos, counter);
+      counter++;
+        orientation=orientation + increment;
       }
-      return counter;
 }
+
+double calcul_distance(t_cub *cub)
+{
+    double distance;
+    distance = sqrt(((cub->player.x - cub->x_wall)*(cub->player.x - cub->x_wall) )             +   ((cub->player.y - cub->y_wall)*(cub->player.y - cub->y_wall) ));
+    return distance;
+}
+
 
 void init_data(t_data *data)
 {
