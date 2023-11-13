@@ -18,11 +18,11 @@ OBJ	= $(SRC:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c
-	$(CC) -Imlx -c $< -o $@
+%.o: %.c 
+	$(CC) -g3 -Imlx -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -lm -lmlx -lXext -lX11 -o $(NAME)
+	$(CC) $(OBJ)  -fsanitize=address  -lm -lmlx -lXext -lX11 -o $(NAME)
 
 clean:
 		$(RM) $(OBJ)

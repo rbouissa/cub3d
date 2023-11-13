@@ -12,8 +12,8 @@
 #include<stdlib.h>
 # include <math.h>
 #include"mlx.h"
-#define WIDTH 360
-#define HEIGHT 360
+#define WIDTH 1080
+#define HEIGHT 1080
 #define SIZE 40
 #define PI 3.14
 #define ANGLE 30
@@ -80,13 +80,10 @@ typedef struct s_cub
   int         endian;
   t_data data;
   float orientation;
-
-
-
-
   double hight_Wall;
   int bottom;
   int top;
+  int map_height;
 }   t_cub;
 
 

@@ -59,13 +59,13 @@ void rays(t_cub *pos)
         x += cos(orientation);
         y += sin(orientation);
         //printf("-------> x,%d\n",(int)y / SIZE );
-         if(pos->map[(int)(y / SIZE)][(int)(x / SIZE)] == '1')
+         if(y / SIZE <= 0 || x /SIZE <= 0 ||y/SIZE >=pos->map_height ||x / SIZE >= ft_strlen(pos->map[(int)(y / SIZE)]) || pos->map[(int)(y / SIZE)][(int)(x / SIZE)] == '1')
              break;
-            
     }
       pos->x_wall=x;
       pos->y_wall=y; 
       make_wall(pos);
+      
       dr_wall(pos, counter);
       counter++;
         orientation=orientation + increment;
@@ -166,7 +166,7 @@ int move(int keycode,t_cub *cub)
     }
     if(keycode == 97 )
     {
-        calculateNewPosition(cub,cub->orientation + (PI*0,5),-4);
+        calculateNewPosition(cub,cub->orientation + (PI*0,5),4);
     }
     if(keycode == 100 )
     {
@@ -218,6 +218,7 @@ int main(int c,char **v)
     t_cub cub;
     t_player player;
     t_data data;
+    int i;
     
     init_data(&data);
     init_cub(&cub);
@@ -225,6 +226,11 @@ int main(int c,char **v)
     cub.player = player;
     arg_check(v[1],c);
     cub.map = read_map(v[1],&cub);
+    i = 0;
+    while(cub.map[i])
+        i++;
+    cub.map_height = i;
+    i =0;
    // check_textures_path(&cub);
     map_checking(cub.map);
     // int i = 0;
@@ -238,9 +244,9 @@ int main(int c,char **v)
     //printf("f = %d\n",cub.f_rgb);
     
     cub.mlx = mlx_init();
-    cub.window = mlx_new_window(cub.mlx, 360, 360, "CUb3D");
+    cub.window = mlx_new_window(cub.mlx, WIDTH, HEIGHT, "CUb3D");
     
-    cub.img = mlx_new_image(cub.mlx, 360, 360);
+    cub.img = mlx_new_image(cub.mlx, 1080, 1080);
     cub.addr = mlx_get_data_addr(cub.img, &cub.bits_per_pixel, &cub.line_length,
                                  &cub.endian);
     // printf("--------\n");
