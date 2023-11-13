@@ -1,10 +1,22 @@
 #include"cub3d.h"
 
-void make_wall(t_cub *cub)
+double make_it_good(t_cub *game,double orientation, double o_distance)
+{
+    double distance;
+    double angleDifference;
+    angleDifference = fabs(game->orientation - orientation);
+    if (angleDifference < PI / 2)
+        distance = o_distance * cos(angleDifference);
+    else
+       distance = o_distance * cos(M_PI - angleDifference);
+       return distance;
+}
+void make_wall(t_cub *cub,double orientation)
 {
     double distance_Wall;
     double dis;
     distance_Wall= calcul_distance(cub);
+    distance_Wall=make_it_good(cub,orientation,distance_Wall);
     cub->hight_Wall=(64*WIDTH)/distance_Wall;
     cub->top=(HEIGHT/2)-(cub->hight_Wall/2);
     cub->bottom=cub->top+cub->hight_Wall;
@@ -64,7 +76,7 @@ void rays(t_cub *pos)
     }
       pos->x_wall=x;
       pos->y_wall=y; 
-      make_wall(pos);
+      make_wall(pos,orientation);
       
       dr_wall(pos, counter);
       counter++;
