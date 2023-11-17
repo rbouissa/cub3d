@@ -8,7 +8,11 @@ void fill_textures(t_cub *cub,char *v)
 		i=check_NO(v);
 		if(cub->no)
 			error_msg("Oops!Something Happens!\n");
-		cub->no=ft_substr(v,i,ft_strlen(v));
+		printf("v==%s\n",v);
+		printf("i==%d\n",i);
+		printf("strlen==%zu\n",ft_strlen(v)-4);
+		cub->no=ft_substr(v,i,ft_strlen(v)-(i+1));
+		//file_existance(open(cub->no,O_RDONLY),cub->no);
 		//free(v);
 		cub->count++;
 	}
@@ -17,7 +21,8 @@ void fill_textures(t_cub *cub,char *v)
 		i=check_SO(v);
 		if(cub->so)
 			error_msg("Oops!Something Happens!\n");
-		cub->so = ft_substr(v,i,ft_strlen(v));
+		cub->so = ft_substr(v,i,ft_strlen(v)-(i+1));
+		//file_existance(open(cub->so,O_RDONLY),cub->so);
 		//free(v);
 		cub->count++;
 	}
@@ -27,7 +32,8 @@ void fill_textures(t_cub *cub,char *v)
 
 		if(cub->ea)
 			error_msg("Oops!Something Happens!\n");
-		cub->ea = ft_substr(v,i,ft_strlen(v));
+		cub->ea = ft_substr(v,i,ft_strlen(v)-(i+1));
+		//file_existance(open(cub->ea,O_RDONLY),cub->ea);
 		//free(v);
 		cub->count++;
 	}
@@ -36,7 +42,8 @@ void fill_textures(t_cub *cub,char *v)
 		i=check_WE(v);
 		if(cub->we)
 			error_msg("Oops!Something Happens!\n");
-		cub->we = ft_substr(v,i,ft_strlen(v));
+		cub->we = ft_substr(v,i,ft_strlen(v)-(i+1));
+		//file_existance(open(cub->we,O_RDONLY),cub->we);
 		//free(v);
 		cub->count++;
 	}
@@ -66,6 +73,7 @@ void file_existance(int fd,char *s)
 {
 	if(fd==-1)
 	{
+		printf("s = %s\n",s);
 		free(s);
 		close(fd);
 		error_msg("Oops!This Path Not Found!\n");

@@ -25,19 +25,6 @@ void draw_line_orientation(t_cub *cub,int x,int y)
     }
 }
 
-int rendring_minimap(t_cub *cub)
-{
-    double k;
-    mlx_clear_window(cub->mlx, cub->window);
-    //draw_map(cub);
-    draw_player_position(cub,cub->player.x,cub->player.y);
-    rays(cub);
-    //k=calcul_distance(cub);
-
-    //printf("------->%f\n",k);
-    mlx_put_image_to_window(cub->mlx, cub->window, cub->img, 0, 0);
-    return(0);
-}
 
 void draw_wall(t_cub *cub,int x,int y)
 {
