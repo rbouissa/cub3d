@@ -80,13 +80,15 @@ void	ft_putstr_fd(char *s, int fd)
 }
 
 
-void check_RGB(char *rgb,t_cub *cub)
+int check_RGB(char *rgb,t_cub *cub)
 {
 	int i = 0;
 	int count = 0;
 	int j = 0;
+	int color;
 	int k = 0;
 	int nb = 0;
+	printf("rgb ===== %s\n",rgb);
 	i = skip_space(rgb);	
 	while(rgb[i])
 	{
@@ -98,6 +100,7 @@ void check_RGB(char *rgb,t_cub *cub)
 		error_msg("Oops!Invalid RGB!\n");
 	i = skip_space(rgb);
 	char **n = ft_split(rgb + i,',');
+	free(rgb);
 	//printf
 	i =0;
 	while(n[i])
@@ -122,18 +125,31 @@ void check_RGB(char *rgb,t_cub *cub)
 			}
 			j++;
 		}
+		if(j>3)
+			error_msg("##Oops!Invalid RGB!\n");
 		i++;
 	}
 	i =-1;
 	while(n[++i])
 		check_nb_rgb(n[i]);
 	i = 0;
-	cub->f_rgb =(ft_atoi(n[0]) << 16) | (ft_atoi(n[1]) << 8) | ft_atoi(n[2]);
+	color =(ft_atoi(n[0]) << 16) | (ft_atoi(n[1]) << 8) | ft_atoi(n[2]);
+	ft_free(n);
+	return(color);
 }
 void check_nb_rgb(char *s)
 {
 	int nb = 0;
+	int i = 0;
 
+	// while(s[i])
+	// 	i++;
+	// if(i>3)
+	// {
+	// 	printf("i ====== %d\n",i);
+	// 	printf("s ==== %s\n",s);
+	// 	error_msg("---Oops!Invalid RGB!---\n");
+	// }
 	nb = ft_atoi(s);
 	if(nb<0 || nb>255)
 		error_msg("---Oops!Invalid RGB!---\n");

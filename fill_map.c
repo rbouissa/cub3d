@@ -103,7 +103,6 @@ char	**read_map(char *map,t_cub *cub)
 			continue;
 		}
 		fill_textures(cub,line);
-		//free(line);
 		if(cub->count==6)
 			break;
 		line = get_next_line(fd);

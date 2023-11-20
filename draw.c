@@ -98,12 +98,6 @@ void draw_player_position(t_cub *cub,int x,int y)
 {
     int i =0;
     int j =0;
-  //  ("x = %d\n",cub->x);
-  //  printf("y = %d\n",cub->y);
-
-//   printf("x = %f\n",cub->player.x);
-//     printf("y = %f\n",cub->player.y);
-   // exit(0);
     while(i< 10)
     {
         j= 0 ;
@@ -150,33 +144,3 @@ void draw_map(t_cub *cub)
         i++;
     }
 }
-
-//void fill_ort_move()
-// void draw_angle(t_cub *cub)
-// {
-    
-// }
-// void draw_line1(void *mlx_ptr, void *win_ptr, int x1, int y1, int x2, int y2, int color) {
-//     int dx = abs(x2 - x1);
-//     int dy = abs(y2 - y1);
-//     int sx = (x1 < x2) ? 1 : -1;
-//     int sy = (y1 < y2) ? 1 : -1;
-//     int err = dx - dy;
-
-//     while (1) {
-//         mlx_pixel_put(mlx_ptr, win_ptr, x1, y1, color);
-
-//         if (x1 == x2 && y1 == y2)
-//             break;
-
-//         int e2 = 2 * err;
-//         if (e2 > -dy) {
-//             err -= dy;
-//             x1 += sx;
-//         }
-//         if (e2 < dx) {
-//             err += dx;
-//             y1 += sy;
-//         }
-//     }
-// }

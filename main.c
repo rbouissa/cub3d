@@ -81,8 +81,6 @@ int get_texture_color(t_cub *texture, int x, int y,int text_ort)
     int pixel_position;
     unsigned int color;
 
-   // printf("-----=====%d",text_ort);
-
     if (x < 0 || y < 0 || x >= texture->t[text_ort].w || y >= texture->t[text_ort].h)
         return (0);
     pixel_position = y * texture->t[text_ort].line_length + x * (texture->t[text_ort].bits_per_pixel / 8);
@@ -98,43 +96,27 @@ void dr_wall(t_cub *cub, int counter,int hit_vert, int hit_horz)
     double l;
     int text_ort=0;
 
-    //text_ort = 0;
     if(cub->or==EAST)
-    {
-       // printf("orientation = %f\n",cub->orientation);
         text_ort = EAST;
-    }
     else if(cub->or==WEST)
-    {
-        //printf("orientation = %f\n",cub->orientation);
         text_ort = WEST;
-    }
     else if(cub->or==NORTH)
-    {
-        //printf("orientation = %f\n",cub->orientation);
         text_ort = NORTH;
-    }
     else if(cub->or==SOUTH)
-    {
-       // printf("orientation = %f\n",cub->orientation);
         text_ort = SOUTH;
-     }
-
     y=0;
    if (hit_vert)
     cub->t[text_ort].x = (int)cub->x_wall % (int)cub->t[text_ort].w;
    else if (hit_horz)
        cub->t[text_ort].x = (int)cub->y_wall % (int)cub->t[text_ort].w;
-
-  //      game->textures[t].x = (int)game->wall[i].y % (int)game->textures[t].w;
     cub->t[text_ort].y = 0;
     j = (double)cub->t[text_ort].h / cub->hight_Wall;
     while(y<HEIGHT && text_ort<4)
     {
         if(y<cub->top)
-            color=0xffffff;
+            color=cub->f_rgb;
         else if(y>cub->bottom)
-            color=0x00ff00;
+            color=cub->c_rgb;
         else
         {
             l = cub->t[text_ort].y;
@@ -175,13 +157,8 @@ void rays(t_cub *pos)
     {     
         x = pos->player.x;
         y = pos->player.y;
-        //ssssprintf("ori == %d\n" , pos->orientation);
-        //or=(PI / 2) / 7;
     while(1)
     {
-       
-        //orientation = pos->orientation;
-        //my_mlx_pixel_put(pos, x, y, 0x1DF235);
         yy=y;
         xx=x;
         x += cos(orientation);
@@ -192,10 +169,6 @@ void rays(t_cub *pos)
                 hit_vert = 1;
         if (pos->map[(int)(yy) / SIZE][(int)x / SIZE] == '1')
                 hit_horz = 1;
-
-        
-
-        //printf("-------> x,%d\n",(int)y / SIZE );
          if(y / SIZE <= 0 || x /SIZE <= 0 ||y/SIZE >=pos->map_height ||x / SIZE >= ft_strlen(pos->map[(int)(y / SIZE)]) || pos->map[(int)(y / SIZE)][(int)(x / SIZE)] == '1')
              break;
     }
@@ -203,22 +176,13 @@ void rays(t_cub *pos)
       pos->y_wall=y; 
       make_wall(pos,orientation);
       if(cos(orientation)>0 && hit_horz)
-      {
         pos->or=EAST;
-      }
       else if(cos(orientation)<0 && hit_horz)
-      {
         pos->or=WEST;
-      }
       else if(sin(orientation )>0 && hit_vert )
-      {
         pos->or=NORTH;
-      }
       else if(sin(orientation  )<0 && hit_vert)
-      {
         pos->or=SOUTH;
-
-      }
       dr_wall(pos, counter, hit_vert,hit_horz);
       counter++;
         orientation=orientation + increment;
@@ -245,12 +209,8 @@ int rendring_minimap(t_cub *cub)
 {
     double k;
     mlx_clear_window(cub->mlx, cub->window);
-    //draw_map(cub);
     draw_player_position(cub,cub->player.x,cub->player.y);
     rays(cub);
-    //k=calcul_distance(cub);
-
-    //printf("------->%f\n",k);
     mlx_put_image_to_window(cub->mlx, cub->window, cub->img, 0, 0);
     return(0);
 }
@@ -306,44 +266,27 @@ void calculateNewPosition(t_cub *cub, float ort, float dist)
 
 int move(int keycode,t_cub *cub)
 {
-    // printf("=========\n");
-    //printf("---%c---keycode = %d--- x=%f--y=%f-\n",cub->map[(int)(cub->player.y)/SIZE][(int)(cub->player.x)/SIZE],keycode,cub->player.x ,cub->player.y );
     if(keycode == 65307)
         exit(0);
     if(keycode == 65361)
-    {
         cub->orientation -= (PI / 180) * 2;
-        // printf("orientation = %f\n",cub->orientation);
-    // calculateNewPosition(&cub->player.x,&cub->player.y,cub->orientation,1);
-    }
     if(keycode == 65363)
-    {
         cub->orientation += (PI / 180) * 2;
-        // printf("orientation = %f\n",cub->orientation);
-    //    calculateNewPosition(&cub->player.x,&cub->player.y,cub->orientation,1);
-    }
     if(keycode == 119)
-    {
         calculateNewPosition(cub,cub->orientation,4);
-    }
     if(keycode == 115)
-    {
         calculateNewPosition(cub,cub->orientation,-4);
-    }
     if(keycode == 97 )
-    {
         calculateNewPosition(cub,cub->orientation + (PI*0,5),4);
-    }
     if(keycode == 100 )
-    {
         calculateNewPosition(cub,cub->orientation -(PI*0,5),4);
-    }
     return(0);
 }
 
 void fill_orientation(char c,t_cub *cub)
 {
     if(c=='N')
+        //printf("\\\\\\\\\\n");
         cub->orientation = PI * 1.5;
     if(c=='S')
         cub->orientation = PI * 0.5;
@@ -366,10 +309,8 @@ void init_player(t_cub *cub)
             if(cub->map[i][j]=='N' || cub->map[i][j]=='S' || cub->map[i][j]=='W' || cub->map[i][j]=='E')
             {
                 cub->player.x = (j * SIZE) + (SIZE / 2);
-                // printf("x = %f\n",cub->player.x);
                 cub->player.y = (i * SIZE)  + (SIZE / 2);
                 cub->map[(int)(cub->player.y)/SIZE][(int)(cub->player.x)/SIZE] = '0';
-                // printf("y = %f\n",cub->player.y);
                 fill_orientation(cub->map[i][j],cub);
                 return;
             }
@@ -378,7 +319,15 @@ void init_player(t_cub *cub)
         i++;
     }
 }
+void	ft_free(char **str)
+{
+	int	i;
 
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+	free(str);
+}
 int main(int c,char **v)
 {
     t_cub cub;
@@ -397,17 +346,9 @@ int main(int c,char **v)
         i++;
     cub.map_height = i;
     i =0;
-   //check_textures_path(&cub);
     map_checking(cub.map);
-    // int i = 0;
-    // while(cub.map[i])
-    // {
-    //     // printf("%s\n",cub.map[i]);
-    //     i++;
-    // }
-    check_RGB(cub.c,&cub);
-    check_RGB(cub.f, &cub);
-    //printf("f = %d\n",cub.f_rgb); 
+    cub.c_rgb = check_RGB(cub.c,&cub);
+    cub.f_rgb = check_RGB(cub.f, &cub);
     cub.mlx = mlx_init();
     cub.window = mlx_new_window(cub.mlx, WIDTH, HEIGHT, "CUb3D");
     texture_init(&cub);
@@ -419,4 +360,5 @@ int main(int c,char **v)
     mlx_hook(cub.window, 2, 1L << 0, &move, &cub);
     mlx_loop_hook(cub.mlx, rendring_minimap, &cub);
     mlx_loop(cub.mlx);
+    
 }

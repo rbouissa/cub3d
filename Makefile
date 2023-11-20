@@ -22,7 +22,7 @@ all: $(NAME)
 	$(CC) -g3 -Imlx -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ)  -fsanitize=address  -lm -lmlx -lXext -lX11 -o $(NAME)
+	$(CC) $(OBJ) -fsanitize=address  -lm -lmlx -lXext -lX11 -o $(NAME)
 
 clean:
 		$(RM) $(OBJ)

@@ -14,7 +14,7 @@
 #include"mlx.h"
 #define WIDTH 1080
 #define HEIGHT 1080
-#define SIZE 40
+#define SIZE 64
 #define PI 3.14
 #define ANGLE 30
 #define EAST 0
@@ -121,7 +121,7 @@ char **join_all(char *s,char c);
 void check_textures_path(t_cub *cub);
 int	ft_atoi(char *str);
 void error_msg(char *msg);
-void check_RGB(char *rgb,t_cub *cub);
+int check_RGB(char *rgb,t_cub *cub);
 void check_nb_rgb(char *s);
 void map_checking(char **map);
 int check_WE(char *s);
@@ -153,4 +153,5 @@ void draw_map(t_cub *cub);
 void my_mlx_pixel_put(t_cub *data, int x, int y, int color);
 void rays(t_cub *pos);
 double calcul_distance(t_cub *cub);
+void	ft_free(char **str);
 #endif
